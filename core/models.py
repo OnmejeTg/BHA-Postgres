@@ -4,6 +4,8 @@ from django.db import models
 
 # Create your models here.
 # Staff model
+
+
 class Staff(models.Model):
     staff_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100)
@@ -17,11 +19,13 @@ class Staff(models.Model):
     appointment_date = models.DateField()
     appointment_type = models.CharField(max_length=100)
     sex = models.CharField(max_length=10)
-    
+
     def __str__(self):
         return self.name
 
 # Parent model
+
+
 class Parent(models.Model):
     parent_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=80)
@@ -33,6 +37,8 @@ class Parent(models.Model):
         return self.name
 
 # Grade (class) model
+
+
 class Grade(models.Model):
     name = models.CharField(max_length=50)
 
@@ -54,6 +60,8 @@ class Pupil(models.Model):
         return self.name
 
 # first term fee model
+
+
 class feeFirst(models.Model):
     pupil_id = models.ForeignKey(Pupil, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField()
@@ -64,6 +72,8 @@ class feeFirst(models.Model):
         return self.pupil_id.name
 
 # second term fee model
+
+
 class feeSecond(models.Model):
     pupil_id = models.ForeignKey(Pupil, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField()
@@ -74,6 +84,8 @@ class feeSecond(models.Model):
         return self.pupil_id.name
 
 # third term fee model
+
+
 class feeThird(models.Model):
     pupil_id = models.ForeignKey(Pupil, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField()
@@ -84,6 +96,8 @@ class feeThird(models.Model):
         return self.pupil_id.name
 
 # announcement model
+
+
 class Announcement(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField()
