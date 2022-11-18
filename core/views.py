@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Announcement, Grade, Parent, Staff, Pupil, feeFirst, feeSecond, feeThird
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib.auth.decorators import login_required
 
 
@@ -378,22 +378,39 @@ def add_pupil(request):
         pupil_num = str(len(Pupil.objects.all())+1)
         id_pupil = initial + yoa + sex + pupil_num
 
-        try:
-            parent_model = Parent.objects.get(parent_id=pupil_parent_id)
-            pupil_class_model = Grade.objects.get(name=pupil_class)
-            pupil = Pupil.objects.create(
-                pupil_id=id_pupil, name=pupil_name, date_of_birth=pupil_dob,
-                year_of_admission=pupil_yoa, sex=pupil_sex, parent_id=parent_model, class_id=pupil_class_model)
-            pupil.save()
-            msg = 'The Pupil '+'"' + pupil_name + '"' + \
-                ' added successfully. ID is ' + id_pupil
-            messages.info(request, msg)
+        if Pupil.objects.filter(pupil_id=id_pupil).exists():
+            messages.info(request, 'Pupil already exists with the ID: ' + id_pupil)
+        pupil_num = str(len(Pupil.objects.all())+2)
+        id_pupil = initial + yoa + sex + pupil_num
 
-        except ObjectDoesNotExist:
-            messages.info(request, 'Invaild Parent ID: ' + pupil_parent_id)
-        finally:
+        if pupil_sex == '':
+            messages.info(request, 'Please select pupil\'s sex')
             return redirect('add_pupil')
+        elif pupil_class == '':
+            messages.info(request, 'Please select pupil\'s class')
+            return redirect('add_pupil')
+        else:
+            try:
+                parent_model = Parent.objects.get(parent_id=pupil_parent_id)
+                pupil_class_model = Grade.objects.get(name=pupil_class)
+                pupil = Pupil.objects.create(
+                    pupil_id=id_pupil, name=pupil_name, date_of_birth=pupil_dob,
+                    year_of_admission=pupil_yoa, sex=pupil_sex, parent_id=parent_model, class_id=pupil_class_model)
+                pupil.save()
+                msg = 'The Pupil '+'"' + pupil_name + '"' + \
+                    ' added successfully. ID is ' + id_pupil
+                messages.info(request, msg)
+                
+            except ObjectDoesNotExist:
+                messages.info(request, 'Invaild Parent ID: ' + pupil_parent_id)
 
+            except ValidationError as ve:
+                messages.info(request, ve )
+
+            except ValueError as ValueE:
+                messages.info(request, ValueE )
+            finally:               
+                return redirect('add_pupil')
     else:
         return render(request, 'pupil/add_pupil.html')
 
