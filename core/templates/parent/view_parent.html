@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}BHA-Parent{% endblock %}
+
+{% block content %}
+<h3>Parents</h3>
+Total number of Parents are <strong>{{num_parents}}</strong>
+<a href="{% url 'add_parent' %}" class="btn btn-primary ms-2">Add Parent</a>
+<hr>
+<br>
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+{% for parent in parents %}
+<tr>
+    <td><a href="{% url 'parent_detail' parent.parent_id %}" style="text-decoration: none;">{{parent.parent_id}}</a></td>
+    <td>{{parent.name}}</td>
+    <td>{{parent.phone}}</td>
+    <td>{{parent.email}}</td>
+    <td>{{parent.address}}</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% if parents.has_other_pages %}
+  <ul class="pagination">
+    {% if parents.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ parents.previous_page_number }}">Previous</a></li>
+    {% else %}
+        <li class="page-item disabled">
+    {% endif %}
+    {% for i in parents.paginator.page_range %}
+      {% if parents.number == i %} 
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ i }}</a>
+          </li>
+      {% else %}  
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if parents.has_next %} 
+      <li class="page-item"><a class="page-link" href="?page={{ parents.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled">
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}

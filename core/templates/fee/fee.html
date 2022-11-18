@@ -1,0 +1,87 @@
+{% extends 'base.html' %} 
+{% block title %} Fee {% endblock %} 
+{% block content %}
+<h3>Fee</h3>
+<hr>
+<div class="row">
+  <div class="col-md-6">
+    <form action="{% url 'check_fee' %}" class="row g-3" method="POST">
+        <h6>Check Fees</h6>
+        {% csrf_token %}
+        <div class="col-md-8">
+            <div class="" style="background-color: rgb(224, 163, 163)">
+                {% for message in messages %}
+                  <p>{{message}}</p>
+                {% endfor %}
+            </div>
+          <select name="pupil_class" class="form-select">
+            <option>Select Class</option>
+            <option value="Wisdom Reception">Wisdom Rec</option>
+            <option value="Excellent Reception">Excellent Rec</option>
+            <option value="Nursery 1">Nursery 1</option>
+            <option value="Nursery 2">Nursery 2</option>
+            <option value="Primary 1">Primary 1</option>
+            <option value="Primary 2">Primary 2</option>
+            <option value="Primary 3">Primary 3</option>
+            <option value="Primary 4">Primary 4</option>
+            <option value="Primary 5">Primary 5</option>
+            <option value="Primary 6">Primary 6</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+            <select name="term" class="form-select">
+              <option> Select Term</option>
+              <option value="fee_first">First Term</option>
+              <option value="fee_second">Second Term</option>
+              <option value="fee_third">Third Term</option>
+            </select>
+        </div>
+        <div class="col-md-8">
+            <input type="text" name="year" placeholder="Enter academic year"  class="form-control" required>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary" name="html">Check</button>
+          <button type="submit" class="btn btn-primary" name="pdf">PDF</button>
+          
+        </div>
+      </form>
+  </div>
+  <div class="col-md-6">
+    <form action="{% url 'fee_defaulter' %}" class="row g-3" method="POST">
+        <h6>Check Fee Defaulters</h6>
+        {% csrf_token %}
+        <div class="col-md-8">
+          <select name="pupil_class" class="form-select">
+            <option>Select Class</option>
+            <option value="Wisdom Reception">Wisdom Rec</option>
+            <option value="Excellent Reception">Excellent Rec</option>
+            <option value="Nursery 1">Nursery 1</option>
+            <option value="Nursery 2">Nursery 2</option>
+            <option value="Primary 1">Primary 1</option>
+            <option value="Primary 2">Primary 2</option>
+            <option value="Primary 3">Primary 3</option>
+            <option value="Primary 4">Primary 4</option>
+            <option value="Primary 5">Primary 5</option>
+            <option value="Primary 6">Primary 6</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+            <select name="term" class="form-select">
+              <option>Select Term</option>
+              <option value="Term 1">First Term</option>
+              <option value="Term 2">Second Term</option>
+              <option value="Term 3">Third Term</option>
+            </select>
+        </div>
+        <div class="col-md-8">
+            <input type="text" name="year" placeholder="Enter academic year"  class="form-control" required>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary" name="html">Check</button>
+          <button type="submit" class="btn btn-primary" name="pdf">PDF</button>
+        </div>
+      </form>
+  </div>
+</div>
+
+{% endblock %}

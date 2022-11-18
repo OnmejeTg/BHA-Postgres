@@ -1,0 +1,70 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block title %}BHA - Pay Fee{% endblock %} 
+
+{%block content %}
+<h5>Pay Fee</h5>
+<span>Fill out form below to pay fee </span>
+<a href="{% url 'fee' %}" class="btn btn-primary ms-2">Back</a>
+<hr />
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <img src="{% static 'assets/img/form-3.jpg' %}" alt="">
+    </div>
+    <div class="col">
+      <div class="col container" style="background-color: rgb(163, 224, 163)">
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      <form action="{% url 'pay_action' %}" class="row g-3" method="POST">
+        {% csrf_token %}
+        <div class="col-12"> 
+          <label for="" class="form-label">Pay Fee for <strong>{{pupil}}</strong></label>
+          <input
+            type="text"
+            name="pupil_id"
+            class="form-control"
+            required
+            value="{{pupil_id}}"
+          />
+        </div>
+        <div class="col-12"> 
+          <input
+            type="text"
+            name="year"
+            class="form-control"
+            placeholder="Enter Academic Year"
+            required
+          />
+        </div>
+        <div class="col-12"> 
+          <select name="term" class="form-select">
+            <option selected>Select term</option>
+  
+            <option value="fee_first">First Term</option>
+            <option value="fee_second">Second Term</option>
+            <option value="fee_third">Third Term</option>
+            
+          </select>
+        </div>
+        <div class="col-12"> 
+          <input
+            type="text"
+            name="amount"
+            class="form-control"
+            placeholder="Enter Amount"
+            required
+          />
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

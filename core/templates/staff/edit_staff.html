@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block title %}BHA - Edit Staff{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<h5>Update Staff: {{staff}} ({{staff.staff_id}})</h5>
+<span>Edit staff's data below</span>
+<a href="{% url 'view_staff' %}" class="btn btn-primary ms-2">View Staff</a>
+<hr />
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img src="{% static 'assets/img/form-3.jpg' %}" alt="">
+    </div>
+    <div class="col">
+      <div class="col container" style="background-color: rgb(163, 224, 163)">
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      <form action="" class="row g-3" method="POST">
+        {% csrf_token %}
+        <div class="col-md-12"> 
+          <label for="name">Staff name</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            required
+            value="{{staff.name}}"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="phone">Phone</label>
+          <input
+            type="text"
+            name="phone"
+            class="form-control"
+            value="{{staff.phone}}"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            value="{{staff.email}}"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+            <label for="qualification">Qualification</label>
+            <select name="qualification" class="form-select">
+              <option value="{{staff.qualification}}" selected>{{staff.qualification}}</option>
+              <option value="GCE/SSCE">GCE/SSCE</option>
+              <option value="NCE">NCE</option>
+              <option value="ND">National Deploma</option>
+              <option value="HND">Higher National Deploma</option>
+              <option value="Degree">First Degree</option>
+              <option value="Masters">Masters Degree</option>
+              <option value="PhD">PhD</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="dob">Date of Birth (YYYY-MM-DD)</label>
+            <input
+              type="text"
+              name="dob"
+              class="form-control"
+              value="{{staff.dob}}"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="discipline">Discipline</label>
+            <input
+              type="text"
+              name="discipline"
+              class="form-control"
+              value="{{staff.discipline}}"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="designation">Designation</label>
+            <select name="designation" class="form-select">
+              <option value="{{staff.designation}}">{{staff.designation}}</option>
+              <option value="Admin">Admin</option>
+              <option value="Teaching">Teaching</option>
+              <option value="Non teaching">Non teaching</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="sex">Sex</label>
+            <select name="sex" class="form-select">
+              <option value="{{staff.sex}}">{{staff.sex}}</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="ap_type">Appointment Type</label>
+            <select name="ap_type" class="form-select">
+              <option value="{{staff.appointment_type}}">{{staff.appointment_type}}</option>
+              <option value="Parmanent">Parmanent</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Volunteer">Volunteer</option>
+              <option value="Internship">Internship</option>
+              <option value="NYSC">NYSC</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label for="ap_date">Appointment Date(YYYY-MM-DD)</label>
+            <input
+              type="text"
+              name="ap_date"
+              class="form-control"
+              value="{{staff.appointment_date}}"
+              required
+            />
+          </div>
+          
+          <div class="col-md-12">
+            <label for="address">Address</label>
+            <input
+              type="text"
+              name="address"
+              class="form-control"
+              value="{{staff.address}}"
+              required
+            />
+          </div>
+
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      <br>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}BHA - Fee{% endblock %}
+
+{% block content %}
+<h5>{{class}} - {{year}} - {{term}}</h5>
+<span><b>{{num_pupils}}</b> Pupils Found</span>
+<a href="{% url 'fee' %}" class="btn btn-primary">Back</a>
+
+<hr>
+<br>
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Date</th>
+        <th scope="col">Parent</th>
+      </tr>
+    </thead>
+{% for pupil in pupils %}
+<tr>
+    <td><a href="{% url 'pupil_detail' pupil.pupil_id.pupil_id %}" style="text-decoration: none;">{{pupil.pupil_id.pupil_id}}</a></td>
+    <td>{{pupil.pupil_id.name}}</td>
+    <td>{{pupil.amount}}</td>
+    <td>{{pupil.date}}</td>
+    <td>{{pupil.pupil_id.parent_id}}</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+
+{% if pupils.has_other_pages %}
+  <ul class="pagination">
+    {% if pupils.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ pupils.previous_page_number }}">Previous</a></li>
+    {% else %}
+        <li class="page-item disabled">
+    {% endif %}
+    {% for i in pupils.paginator.page_range %}
+      {% if pupils.number == i %} 
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ i }}</a>
+          </li>
+      {% else %}  
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if pupils.has_next %} 
+      <li class="page-item"><a class="page-link" href="?page={{ pupils.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled">
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}

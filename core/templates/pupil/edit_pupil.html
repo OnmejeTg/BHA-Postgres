@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}BHA - Edit Pupil{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<h5>Update Pupil: {{pupil}}--{{pupil.pupil_id}}</h5>
+<span>Edit pupil's data below</span>
+<a href="{% url 'pupil' %}" class="btn btn-primary ms-2">View Pupils</a>
+<hr />
+<div class="container ">
+  <div class="row">
+    <div class="col">
+      <img src="{% static 'assets/img/form-3.jpg' %}" alt="">
+    </div>
+    <div class="col">
+      <div class="col container" style="background-color: rgb(163, 224, 163)">
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      <form action="" class="row g-3" method="POST">
+        {% csrf_token %}
+        <div class="col-md-12">
+          <label for="pupil_name" class="form-label">Pupil's Name</label> 
+          <input
+            type="text"
+            name="pupil_name"
+            class="form-control"
+            required
+            value="{{pupil.name}}"
+          />
+        </div> 
+        <div class="col-md-6">
+          <label for="name" class="form-label">Date of Birth(YYYY-MM-DD)</label>
+          <input
+            type="text"
+            name="pupil_dob"
+            class="form-control"
+            value="{{pupil.date_of_birth}}"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="pupil_yoa" class="form-label">Year of Admission</label>
+          <input
+            type="text"
+            name="pupil_yoa"
+            class="form-control"
+            value="{{pupil.year_of_admission}}"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="pupil_sex" class="form-label">Sex</label>
+          <select name="pupil_sex" class="form-select">
+            <option value="{{pupil.sex}}" selected>{{pupil.sex}}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="pupil_class" class="form-label">Class</label>
+          <select name="pupil_class" class="form-select">
+            <option selected>{{pupil.class_id}}</option>
+            <option value="Wisdom Reception">Wisdom Rec</option>
+            <option value="Excellent Reception">Excellent Rec</option>
+            <option value="Nursery 1">Nursery 1</option>
+            <option value="Nursery 2">Nursery 2</option>
+            <option value="Primary 1">Primary 1</option>
+            <option value="Primary 2">Primary 2</option>
+            <option value="Primary 3">Primary 3</option>
+            <option value="Primary 4">Primary 4</option>
+            <option value="Primary 5">Primary 5</option>
+            <option value="Primary 6">Primary 6</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}BHA - Edit Pupil{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<h5>{{parent.name}}</h5>
+<span>Details Below</span>
+<a href="{% url 'edit_parent' parent.parent_id %}" class="btn btn-primary ms-2">Edit</a>
+<a href="{% url 'view_parent' %}" class="btn btn-primary ms-2">View Parents</a>
+<hr />
+<div class="container ">
+  <div class="row">
+    <div class="col-md-8">
+        <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Attribute</th>
+                <th scope="col">Value</th>
+              </tr>
+            </thead>
+            <tr>
+                <td>ID</td>
+                <td>{{parent.parent_id}}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{parent.name}}</td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>{{parent.phone}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{parent.email}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{parent.address}}</td>
+            </tr>
+            {% for pupil in pupils %}
+            <tr>
+                <td>Child</td>
+                <td>{{pupil}} ({{pupil.pupil_id}})</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

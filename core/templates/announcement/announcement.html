@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}BHA-Announcements {% endblock %}
+{% load static %} 
+{% block content %}
+
+<div class="row">
+  <h3>Announcements</h3>
+  <hr />
+  <div class="col-md-6">
+    <strong>Recent Announcements</strong>
+    <p></p>
+    <ul>
+      {% for announcement in announcements %}
+      <li><strong>{{announcement.title}}--{{announcement.created_at}}</strong></li>
+      {{announcement.body}}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <strong>Add Announcements</strong>
+    <div class="col container" style="background-color: rgb(163, 224, 163)">
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+    <p></p>
+    <form action="" class="row g-3" method="POST">
+      {% csrf_token %}
+      <div class="col-md-12">
+        <input
+          type="text"
+          name="title"
+          class="form-control"
+          placeholder="Enter title"
+          required
+        />
+      </div>
+      <div class="col-md-12">
+        <textarea class="form-control" name="body" rows="4" placeholder="Enter body of announcement"></textarea>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Post</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}BHA-Search Pupil{% endblock %}
+
+{% block content %}
+<h5>Search Result</h5>
+<span><b>{{num_parents}}</b> Parents Found</span>
+
+<br>
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+{% for parent in parents %}
+<tr>
+    <td><a href="{% url 'parent_detail' parent.parent_id %}" style="text-decoration: none;">{{parent.parent_id}}</a></td>
+    <td>{{parent.name}}</td>
+    <td>{{parent.phone}}</td>
+    <td>{{parent.email}}</td>
+    <td>{{parent.address}}</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

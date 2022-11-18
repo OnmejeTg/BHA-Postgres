@@ -1,0 +1,169 @@
+{% extends 'base.html' %} {% load static %}
+ {% block title %} Admin Home {%endblock %} 
+
+{% block content %} <br /><br />
+
+<div class="row">  
+  <div class="col-sm-4">
+    <div class="card" style="background-color: #e2e2ee">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #372988;">
+          <iconify-icon
+            inline
+            icon="fa6-solid:children"
+            style="color: #372988"
+            width="50"
+            height="45"
+          ></iconify-icon>
+          Pupils
+        </h5>
+        <h3 style="color: #372988">{{num_pupils}}</h3>
+        <p class="card-text" style="color: #372988 ;">
+          “Anyone who has never made a mistake has never tried anything new.”<br>- Albert Einstein
+        </p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card" style="background-color: #e5d9e9">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #7b358f;">
+          <iconify-icon
+            inline
+            icon="el:adult"
+            style="color: #7b358f"
+            width="50"
+            height="45"
+          ></iconify-icon>
+          Parents
+        </h5>
+        <h3 style="color: #7b358f">{{num_parents}}</h3>
+        <p class="card-text" style="color: #7b358f ;">
+          "Give a man a fish and you feed him for a day; teach a man to fish and you feed him for a lifetime”– Maimonides
+        </p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card" style="background-color: #d2e7e7">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #1e8b8b;">
+          <iconify-icon
+            inline
+            icon="game-icons:teacher"
+            style="color: #1e8b8b"
+            width="50"
+            height="45"
+          ></iconify-icon>
+          Staff
+        </h5>
+        <h3 style="color: #1e8b8b">{{num_staff}}</h3>
+        <p class="card-text" style="color: #1e8b8b ;">
+          “Anyone who stops learning is old, whether at twenty or eighty. Anyone who keeps learning stays young.”– Henry Ford
+        </p>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<br /><br />
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card" style="background-color: #cbe7d0">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #228632;">
+          <iconify-icon
+            inline
+            icon="dashicons:money-alt"
+            style="color: #228632"
+            width="50"
+            height="45"
+          ></iconify-icon>
+          Fees
+        </h5>
+        <h3 style="color: #228632">{{fee_count}}</h3>
+        <p class="card-text" style="color: #228632 ;">
+          "If you think education is expensive, try ignorance." —Robert Orben
+        </p>     
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card" style="background-color: #e9d4c6">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #aa5e2c;">
+          <iconify-icon
+            inline
+            icon="carbon:increase-level"
+            style="color: #aa5e2c"
+            width="50"
+            height="45"
+          ></iconify-icon>
+          Classes
+        </h5>
+        <h3 style="color: #aa5e2c">{{num_classes}}</h3>
+        <p class="card-text" style="color: #aa5e2c ;">
+          “You haven’t failed, until you stop trying” – Unknown
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card" style="background-color: #ebcbd5">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #b42756;">
+          <iconify-icon
+            inline
+            icon="mdi:treasure-chest"
+            style="color: #b42756"
+            width="50"
+            height="45"
+          ></iconify-icon>
+          Assests
+        </h5>
+        <h3 style="color: #b42756">40</h3>
+        <p class="card-text" style="color: #b42756 ;">
+          “Educating the mind without educating the heart is no education at all.” – Aristotle
+        </p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="container" style="background-color: #629da1; padding:5px;">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card" style="background-color: rgb(219, 234, 236)">
+        <div class="card-body">
+          <a href="{% url 'pupil' %}" style="text-decoration: none;"><h5 class="card-title" style="color: #629da1;">Pupils</h5></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card" style="background-color: rgb(219, 234, 236)">
+        <div class="card-body">
+          <a href="{% url 'view_parent' %}" style="text-decoration: none;"><h5 class="card-title" style="color: #629da1;">Parents</h5></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card" style="background-color: rgb(219, 234, 236)">
+        <div class="card-body">
+          <a href="{% url 'view_staff' %}" style="text-decoration: none;"><h5 class="card-title" style="color: #629da1;">Staff</h5></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card" style="background-color: rgb(219, 234, 236)">
+        <div class="card-body">
+          <a href="{% url 'fee' %}" style="text-decoration: none;"><h5 class="card-title" style="color: #629da1;">Fees</h5></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock %}
+</div>

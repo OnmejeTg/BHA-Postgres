@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}BHA-Parent{% endblock %}
+
+{% block content %}
+<h3>Staff</h3>
+<span>Total number of staff are <strong>{{num_staff}}</strong></span>
+<a href="{% url 'add_staff' %}" class="btn btn-primary ms-2">Add staff</a>
+<hr>
+<br>
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+{% for staff in all_staff %}
+<tr>
+    <td><a href="{% url 'staff_detail' staff.staff_id  %}" style="text-decoration: none;">{{staff.staff_id}}</a></td>
+    <td>{{staff.name}}</td>
+    <td>{{staff.phone}}</td>
+    <td>{{staff.email}}</td>
+    <td>{{staff.address}}</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% if all_staff.has_other_pages %}
+  <ul class="pagination">
+    {% if all_staff.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ all_staff.previous_page_number }}">Previous</a></li>
+    {% else %}
+        <li class="page-item disabled">
+    {% endif %}
+    {% for i in all_staff.paginator.page_range %}
+      {% if all_staff.number == i %} 
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{ i }}</a>
+          </li>
+      {% else %}  
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if all_staff.has_next %} 
+      <li class="page-item"><a class="page-link" href="?page={{ all_staff.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled">
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}

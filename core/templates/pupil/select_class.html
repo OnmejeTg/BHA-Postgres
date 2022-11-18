@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}BHA-Pupil{% endblock %}
+
+{% block content %}
+<h5>Select Class</h5>
+
+<div class="row">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="col container" style="background-color: rgb(252, 173, 173)">
+                {% for message in messages %}
+                  <p>{{message}}</p>
+                {% endfor %}
+              </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <select name="pupil_class" class="form-select">
+                <option value="">--Select Class--</option>
+                <option value="Wisdom Reception">Wisdom Rec</option>
+                <option value="Excellent Reception">Excellent Rec</option>
+                <option value="Nursery 1">Nursery 1</option>
+                <option value="Nursery 2">Nursery 2</option>
+                <option value="Primary 1">Primary 1</option>
+                <option value="Primary 2">Primary 2</option>
+                <option value="Primary 3">Primary 3</option>
+                <option value="Primary 4">Primary 4</option>
+                <option value="Primary 5">Primary 5</option>
+                <option value="Primary 6">Primary 6</option>
+            </select>
+    </div>
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="{% url 'pupil' %}" class="btn btn-primary">Back</a>
+    </form>
+    </div>
+</div>
+<hr>
+{% endblock %}

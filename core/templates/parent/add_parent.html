@@ -1,0 +1,117 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}BHA-Parent{% endblock %} 
+
+{%block content %}
+<h3>Add Parent</h3>
+<span>Fill out the form below to add parent </span>
+<a href="{% url 'view_parent' %}" class="btn btn-primary ms-2">View Parent</a>
+<hr />
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <img src="{% static 'assets/img/form-3.jpg' %}" alt="">
+    </div>
+    <div class="col">
+      <div class="col container" style="background-color: rgb(163, 224, 186)">
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+      <form action="" class="row g-3" method="POST">
+        {% csrf_token %}
+        <div class="col-12">
+          <label for="" class="form-label">Parent's Information</label>
+          <input
+            type="text"
+            name="parent_name"
+            class="form-control"
+            placeholder="Enter parent name"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <input
+            type="text"
+            name="parent_phone"
+            class="form-control"
+            placeholder="Enter parent phone"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <input
+            type="email"
+            name="parent_email"
+            class="form-control"
+            placeholder="Enter email"
+          />
+        </div>
+        <div class="col-12">
+          <input
+            type="text"
+            name="parent_address"
+            class="form-control"
+            placeholder="Enter Address"
+            required
+          />
+        </div>
+
+        <div class="col-12">
+          <label for="" class="form-label">Pupil's Information</label>
+          <input
+            type="text"
+            name="pupil_name"
+            class="form-control"
+            placeholder="Enter pupil's name"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <input
+            type="text"
+            name="pupil_dob"
+            class="form-control"
+            placeholder="DOB (YYYY-MM-DD)"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <input
+            type="text"
+            name="pupil_yoa"
+            class="form-control"
+            placeholder="Year of Admission"
+            required
+          />
+        </div>
+        <div class="col-md-6">
+          <select name="pupil_sex" class="form-select">
+            <option value="" selected>Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <select name="pupil_class" class="form-select">
+            <option selected>Class</option>
+            <option value="Wisdom Reception">Wisdom Rec</option>
+            <option value="Excellent Reception">Excellent Rec</option>
+            <option value="Nursery 1">Nursery 1</option>
+            <option value="Nursery 2">Nursery 2</option>
+            <option value="Primary 1">Primary 1</option>
+            <option value="Primary 2">Primary 2</option>
+            <option value="Primary 3">Primary 3</option>
+            <option value="Primary 4">Primary 4</option>
+            <option value="Primary 5">Primary 5</option>
+            <option value="Primary 6">Primary 6</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
