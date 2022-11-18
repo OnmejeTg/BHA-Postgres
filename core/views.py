@@ -631,19 +631,24 @@ def pay_action(request):
         year = request.POST['year']
         term = request.POST['term']
         amount = request.POST['amount']
-
-        pupil = Pupil.objects.get(pupil_id=id_pupil)
-        if term == 'fee_first':
-            fee = feeFirst.objects.create(
-                pupil_id=pupil, amount=amount, academic_year=year)
-        elif term == 'fee_second':
-            fee = feeSecond.objects.create(
-                pupil_id=pupil, amount=amount, academic_year=year)
-        else:
-            fee = feeThird.objects.create(
-                pupil_id=pupil, amount=amount, academic_year=year)
-        fee.save()
-        messages.info(request, 'Added Succesfully')
-        return redirect('pay')
+        try:
+            pupil = Pupil.objects.get(pupil_id=id_pupil)
+            if term == 'fee_first':
+                fee = feeFirst.objects.create(
+                    pupil_id=pupil, amount=amount, academic_year=year)
+            elif term == 'fee_second':
+                fee = feeSecond.objects.create(
+                    pupil_id=pupil, amount=amount, academic_year=year)
+            else:
+                fee = feeThird.objects.create(
+                    pupil_id=pupil, amount=amount, academic_year=year)
+            fee.save()
+            messages.info(request, 'Added Succesfully')
+            return redirect('pay')
+        except ObjectDoesNotExist:
+             messages.info(request, 'Invaild Pupil ID: '+ id_pupil)
+        finally:
+            return render(request, 'fee/pay.html')
+          
     else:
         return render(request, 'fee.pay.html')
