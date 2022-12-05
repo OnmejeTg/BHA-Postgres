@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <td>Parent</td>
-                <td>{{pupil.parent_id}} --ID: {{pupil.parent_id.parent_id}}</td>
+                <td>{{pupil.parent_id}}  ({{pupil.parent_id.parent_id}})</td>
             </tr>
             <tr>
                 <td>Parent's Phone</td>
@@ -54,7 +54,13 @@
             </tr>
             <tr>
                 <td>Fee</td>
-                <td>{{fee_check }} (First Term)</td>
+                <td>
+                    <ul>
+                        <li>First Term --> {{fee1}}</li>
+                        <li>Second Term --> {{fee2}}</li>
+                        <li>Third Term --> {{fee3}}</li>
+                    </ul>
+                </td>
             </tr>
             
             

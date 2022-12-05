@@ -55,13 +55,13 @@ class Pupil(models.Model):
     year_of_admission = models.PositiveIntegerField()
     parent_id = models.ForeignKey(Parent, on_delete=models.CASCADE)
     class_id = models.ForeignKey(Grade, on_delete=models.CASCADE)
+    status = models.CharField(max_length=15, default='active')
 
     def __str__(self):
         return self.name
 
+
 # first term fee model
-
-
 class feeFirst(models.Model):
     pupil_id = models.ForeignKey(Pupil, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField()

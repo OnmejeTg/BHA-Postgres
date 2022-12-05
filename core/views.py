@@ -82,14 +82,18 @@ def admin_logout(request):
 
 @login_required(login_url='admin_login')
 def admin_home(request):
-    num_pupils = len(Pupil.objects.all())
+    num_active_pupils = len(Pupil.objects.filter(status='active'))
+    num_graduated_pupils = len(Pupil.objects.filter(status='graduated'))
+    num_withdrawn_pupils = len(Pupil.objects.filter(status='withdrawn'))
     num_parents = len(Parent.objects.all())
     num_classes = len(Grade.objects.all())
     num_staff = len(Staff.objects.all())
     fee_count = len(feeFirst.objects.filter(academic_year=2022))
 
     context = {
-        'num_pupils': num_pupils,
+        'num_active_pupils': num_active_pupils,
+        'num_graduated_pupils': num_graduated_pupils,
+        'num_withdrawn_pupils': num_withdrawn_pupils,
         'num_parents': num_parents,
         'num_classes': num_classes,
         'num_staff': num_staff,
@@ -342,8 +346,8 @@ def edit_parent(request, id_parent):
 # ********************Pupil*********************
 @login_required(login_url='admin_login')
 def pupil(request):
-    pupil_list = Pupil.objects.all().order_by('name')
-    num_pupils = len(Pupil.objects.all())
+    pupil_list = Pupil.objects.filter(status='active').order_by('name')
+    num_pupils = len(pupil_list)
 
     page = request.GET.get('page', 1)
     pupils = make_pagination(pupil_list, page)
@@ -369,6 +373,7 @@ def add_pupil(request):
         pupil_dob = str.strip(pupil_dob)
         pupil_parent_id = str.strip(pupil_parent_id)
 
+        # Genarate ID
         initial = 'BHA'
         yoa = pupil_yoa[2:]
         if pupil_sex.lower() == 'male':
@@ -378,10 +383,15 @@ def add_pupil(request):
         pupil_num = str(len(Pupil.objects.all())+1)
         id_pupil = initial + yoa + sex + pupil_num
 
+        
         if Pupil.objects.filter(pupil_id=id_pupil).exists():
-            messages.info(request, 'Pupil already exists with the ID: ' + id_pupil)
-        pupil_num = str(len(Pupil.objects.all())+2)
-        id_pupil = initial + yoa + sex + pupil_num
+            # messages.info(request, 'Pupil already exists with the ID: ' + id_pupil)
+            pupil_num = str(len(Pupil.objects.all())+2)
+            id_pupil = initial + yoa + sex + pupil_num
+        elif Pupil.objects.filter(pupil_id=id_pupil).exists():
+            pupil_num = str(len(Pupil.objects.all())+3)
+            id_pupil = initial + yoa + sex + pupil_num
+        
 
         if pupil_sex == '':
             messages.info(request, 'Please select pupil\'s sex')
@@ -422,7 +432,7 @@ def view_pupil_by_class(request):
             class_name = request.POST['pupil_class']
             class_model = Grade.objects.get(name=class_name)
             pupils = Pupil.objects.filter(
-                class_id=class_model).order_by('name')
+                class_id=class_model, status='active').order_by('name')
             num_pupils = len(pupils)
 
             context = {
@@ -473,6 +483,13 @@ def edit_pupil(request, id_pupil):
 
         class_obj = Grade.objects.get(name=pupil_class)
 
+        if class_obj.name == 'Graduated':
+            pupil.status = 'graduated'
+        elif class_obj.name == 'Withdrawn':
+            pupil.status == 'withdrawn'
+        else:
+            pass
+
         pupil.name = name
         pupil.date_of_birth = dob
         pupil.year_of_admission = yoa
@@ -490,12 +507,22 @@ def edit_pupil(request, id_pupil):
 def pupil_detail(request, id_pupil):
     pupil = Pupil.objects.get(pupil_id=id_pupil)
     if feeFirst.objects.filter(pupil_id__pupil_id=id_pupil).exists():
-        fee_check = 'Paid'
+        fee1 = 'Paid'
     else:
-        fee_check = 'Not Paid'
+        fee1 = 'Not Paid'
+    if feeSecond.objects.filter(pupil_id__pupil_id=id_pupil).exists():
+        fee2 = 'Paid'
+    else:
+        fee2 = 'Not Paid'
+    if feeThird.objects.filter(pupil_id__pupil_id=id_pupil).exists():
+        fee3 = 'Paid'
+    else:
+        fee3 = 'Not Paid'
     context = {
         'pupil': pupil,
-        'fee_check': fee_check
+        'fee1': fee1,
+        'fee2': fee2,
+        'fee3': fee3
     }
     return render(request, 'pupil/pupil_details.html', context)
 

@@ -39,13 +39,19 @@
             <tr>
                 <td>Address</td>
                 <td>{{parent.address}}</td>
-            </tr>
-            {% for pupil in pupils %}
+            </tr>    
             <tr>
-                <td>Child</td>
-                <td>{{pupil}} ({{pupil.pupil_id}})</td>
+              <td>Child(ren)</td> 
+                <td>
+                  <ul>
+                    {% for pupil in pupils %}
+                    <li>
+                      {{pupil}} ({{pupil.pupil_id}})
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </td>
             </tr>
-            {% endfor %}
         </tbody>
         </table>
     </div>
