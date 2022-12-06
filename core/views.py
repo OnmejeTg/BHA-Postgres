@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # from django.http import HttpResponse
@@ -346,7 +347,8 @@ def edit_parent(request, id_parent):
 # ********************Pupil*********************
 @login_required(login_url='admin_login')
 def pupil(request):
-    pupil_list = Pupil.objects.filter(status='active').order_by('name')
+    pupil_list = Pupil.objects.filter(
+        ~Q(status='withdrawn') & ~Q(status='graduated')).order_by('name')
     num_pupils = len(pupil_list)
 
     page = request.GET.get('page', 1)
@@ -357,6 +359,36 @@ def pupil(request):
         'num_pupils': num_pupils
     }
     return render(request, 'pupil/pupil.html', context)
+
+
+@login_required(login_url='admin_login')
+def withdrawn(request):
+    pupil_list = Pupil.objects.filter(status='withdrawn').order_by('name')
+    num_pupils = len(pupil_list)
+
+    page = request.GET.get('page', 1)
+    pupils = make_pagination(pupil_list, page)
+
+    context = {
+        'pupils': pupils,
+        'num_pupils': num_pupils
+    }
+    return render(request, 'pupil/withdrawn.html', context)
+
+
+@login_required(login_url='admin_login')
+def graduated(request):
+    pupil_list = Pupil.objects.filter(status='graduated').order_by('name')
+    num_pupils = len(pupil_list)
+
+    page = request.GET.get('page', 1)
+    pupils = make_pagination(pupil_list, page)
+
+    context = {
+        'pupils': pupils,
+        'num_pupils': num_pupils
+    }
+    return render(request, 'pupil/graduated.html', context)
 
 
 @login_required(login_url='admin_login')
@@ -383,7 +415,6 @@ def add_pupil(request):
         pupil_num = str(len(Pupil.objects.all())+1)
         id_pupil = initial + yoa + sex + pupil_num
 
-        
         if Pupil.objects.filter(pupil_id=id_pupil).exists():
             # messages.info(request, 'Pupil already exists with the ID: ' + id_pupil)
             pupil_num = str(len(Pupil.objects.all())+2)
@@ -391,7 +422,6 @@ def add_pupil(request):
         elif Pupil.objects.filter(pupil_id=id_pupil).exists():
             pupil_num = str(len(Pupil.objects.all())+3)
             id_pupil = initial + yoa + sex + pupil_num
-        
 
         if pupil_sex == '':
             messages.info(request, 'Please select pupil\'s sex')
@@ -410,16 +440,16 @@ def add_pupil(request):
                 msg = 'The Pupil '+'"' + pupil_name + '"' + \
                     ' added successfully. ID is ' + id_pupil
                 messages.info(request, msg)
-                
+
             except ObjectDoesNotExist:
                 messages.info(request, 'Invaild Parent ID: ' + pupil_parent_id)
 
             except ValidationError as ve:
-                messages.info(request, ve )
+                messages.info(request, ve)
 
             except ValueError as ValueE:
-                messages.info(request, ValueE )
-            finally:               
+                messages.info(request, ValueE)
+            finally:
                 return redirect('add_pupil')
     else:
         return render(request, 'pupil/add_pupil.html')
@@ -432,7 +462,7 @@ def view_pupil_by_class(request):
             class_name = request.POST['pupil_class']
             class_model = Grade.objects.get(name=class_name)
             pupils = Pupil.objects.filter(
-                class_id=class_model, status='active').order_by('name')
+                class_id=class_model).order_by('name')
             num_pupils = len(pupils)
 
             context = {
@@ -486,9 +516,9 @@ def edit_pupil(request, id_pupil):
         if class_obj.name == 'Graduated':
             pupil.status = 'graduated'
         elif class_obj.name == 'Withdrawn':
-            pupil.status == 'withdrawn'
+            pupil.status = 'withdrawn'
         else:
-            pass
+            pupil.status = 'active'
 
         pupil.name = name
         pupil.date_of_birth = dob
@@ -690,9 +720,9 @@ def pay_action(request):
             messages.info(request, 'Added Succesfully')
             return redirect('pay')
         except ObjectDoesNotExist:
-             messages.info(request, 'Invaild Pupil ID: '+ id_pupil)
+            messages.info(request, 'Invaild Pupil ID: ' + id_pupil)
         finally:
             return render(request, 'fee/pay.html')
-          
+
     else:
         return render(request, 'fee.pay.html')

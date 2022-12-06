@@ -5,10 +5,10 @@
 
 {% block content %}
 
-<h5>{{pupil.name}}</h5>
-<span>Details Below</span>
+<h5>{{pupil.name}} - {{pupil.pupil_id}}</h5>
+
 <a href="{% url 'edit_pupil' pupil.pupil_id %}" class="btn btn-primary ms-2">Edit</a>
-<a href="{% url 'pupil' %}" class="btn btn-primary ms-2">View Pupils</a>
+{% comment %} <a href="{% url 'admin_home' %}" class="btn btn-primary ms-2">Back</a> {% endcomment %}
 <hr />
 <div class="container ">
   <div class="row">
@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <td>Parent</td>
-                <td>{{pupil.parent_id}}  ({{pupil.parent_id.parent_id}})</td>
+                <td>{{pupil.parent_id}} - {{pupil.parent_id.parent_id}}</td>
             </tr>
             <tr>
                 <td>Parent's Phone</td>

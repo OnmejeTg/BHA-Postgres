@@ -41,16 +41,32 @@
                   >Home</a
                 >
               </li>
+
               <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  style="color: White"
-                  ;
-                  aria-current="page"
-                  href="{% url 'pupil' %}"
-                  >Pupil</a
-                >
+                <div class="dropdown">
+                  <a
+                    class="nav-link active dropdown-toggle"
+                    style="color: White"
+                    aria-current="page"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Pupils
+                  </a>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a class="dropdown-item" href="{% url 'active' %}">Active</a>
+                    <a class="dropdown-item" href="{% url 'withdrawn' %}">Withdrawn</a>
+                    <a class="dropdown-item" href="{% url 'graduated' %}">Graduated</a>
+                  
+                </div>
               </li>
+
               <li class="nav-item">
                 <a
                   class="nav-link active"
@@ -91,9 +107,13 @@
                   >Announcement</a
                 >
               </li>
-              
             </ul>
-            <form class="d-flex" role="search" action="{% url 'search_pupil' %}" method="POST">
+            <form
+              class="d-flex"
+              role="search"
+              action="{% url 'search_pupil' %}"
+              method="POST"
+            >
               {% csrf_token %}
               <input
                 class="form-control me-2"
@@ -109,10 +129,15 @@
                 type="submit"
               >
                 Search
-              </button >
+              </button>
             </form>
-      
-            <form class="d-flex" role="search" action="{% url 'search_parent' %}" method="POST">
+
+            <form
+              class="d-flex"
+              role="search"
+              action="{% url 'search_parent' %}"
+              method="POST"
+            >
               {% csrf_token %}
               <input
                 class="form-control me-2"
@@ -130,16 +155,31 @@
                 Search
               </button>
             </form>
-            <a href="{% url 'admin_logout' %}" class="btn btn-secondary mx-2">Logout</a>
+            <a href="{% url 'admin_logout' %}" class="btn btn-secondary mx-2"
+              >Logout</a
+            >
           </div>
         </div>
       </nav>
     </div>
-    <br>
-    <div class="container">
-      {% block content %}{% endblock %}
-    </div>
-    
+    <br />
+    <div class="container">{% block content %}{% endblock %}</div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
